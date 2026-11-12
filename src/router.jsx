@@ -10,23 +10,23 @@ import Layout from './components/Layout'
 const AppRouter = () => {
     return (
         <BrowserRouter>
-        
-        
 
 
-        <Routes>
-            
+
+
+            <Routes>
+
                 <Route path='/' element={<Layout />} >
-                <Route index element={<Home />} />
-                <Route path='/login' element={<Login />} />
-                <Route path='/profile' element={<Profil />} />
-                <Route path="*" element={<ErrorPage />} />
-            </Route>
-        
-        </Routes>
+                    <Route index element={<Home />} />
+                    <Route path='/login' element={<Login />} />
+                    <Route path='/profile' element={<Profil />} />
+                    <Route path="*" element={<ErrorPage />} />
+                </Route>
+
+            </Routes>
 
 
-      
+
         </BrowserRouter>
     )
 }
