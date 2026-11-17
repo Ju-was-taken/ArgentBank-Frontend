@@ -1,7 +1,7 @@
 import FeatureItem from '../components/FeatureItem'
-import iconChat from '../assets/img/icon-money.png'
-import iconMoney from '../assets/img/icon-money.png'
-import iconSecurity from '../assets/img/icon-security.png'
+import iconChat from '../assets/img/icon-chat.webp'
+import iconMoney from '../assets/img/icon-money.webp'
+import iconSecurity from '../assets/img/icon-security.webp'
 
 
 function Home() {
@@ -22,9 +22,9 @@ function Home() {
 
                 <FeatureItem
 
-                    icon={iconMoney}
+                    icon={iconChat}
                     alt="chat icon"
-                    title="Yourc are our n1 priority"
+                    title="Your are our n1 priority"
                     text=" Need to talk to a representative? You can get in touch through our
             24/7 chat or through a phone call in less than 5 minutes." />
 
