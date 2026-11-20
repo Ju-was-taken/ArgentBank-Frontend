@@ -1,27 +1,65 @@
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { loginUser } from '../redux/userSlice'
+
 function Login() {
-    return (
-        <main className="main bg-dark">
-            <section className="sign-in-content">
-                <i className="fa fa-user-circle sign-in-icon"></i>
-                <h1>Sign In</h1>
-                <form>
-                    <div className="input-wrapper">
-                        <label htmlFor="username">Username</label><input type="text" id="username" />
-                    </div>
-                    <div className="input-wrapper">
-                        <label htmlFor="password">Password</label>
-                        <input type="password" id="password" />
-                    </div>
-                    <div className="input-remember">
-                        <input type="checkbox" id="remember-me" /><label htmlFor="remember-me">Remember me</label>
-                    </div>
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-                    <button className="sign-in-button">Sign In</button>
-                </form>
-            </section>
-        </main>
-    )
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const { token, error, status } = useSelector((state) => state.user)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    dispatch(loginUser({ email, password }))
+  }
+
+  useEffect(() => {
+    if (token) {
+      navigate('/profile')
+    }
+  }, [token, navigate])
+
+  return (
+    <main className="main bg-dark">
+      <section className="sign-in-content">
+        <i className="fa fa-user-circle sign-in-icon"></i>
+        <h1>Sign In</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="input-wrapper">
+            <label htmlFor="username">Username</label>
+            <input
+              type="email"
+              id="username"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-wrapper">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-remember">
+            <input type="checkbox" id="remember-me" />
+            <label htmlFor="remember-me">Remember me</label>
+          </div>
+          {error && <p className="error-message">{error}</p>}
+          <button className="sign-in-button" disabled={status === 'loading'}>
+            {status === 'loading' ? 'Loading...' : 'Sign In'}
+          </button>
+        </form>
+      </section>
+    </main>
+  )
 }
-
 
 export default Login
