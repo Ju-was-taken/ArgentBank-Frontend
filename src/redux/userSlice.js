@@ -18,6 +18,25 @@ export const loginUser = createAsyncThunk(
   }
 )
 
+
+
+export const fetchUserProfile = createAsyncThunk(
+  'user/fetchProfile',
+  async(_,{ getState, rejectWithValue}) => {
+    const token = getState().user.token 
+    const response = await fetch('http://localhost:3001/api/v1/user/profile', {
+      method: 'GET',
+      headers: {Authorization: `Bearer ${token}`},
+    })
+    const data = await response.json()
+
+    if (!response.ok) {
+      return rejectWithValue(data.message)
+    }
+    return data.body
+  }
+)
+
 // 2. L'état initial
 const initialState = {
   token: null,
@@ -52,8 +71,19 @@ const userSlice = createSlice({
         state.status = 'failed'
         state.error = action.payload
       })
+      .addCase(fetchUserProfile.fulfilled, (state, action) => {
+        state.user = action.payload
+      })
+      .addCase(fetchUserProfile.rejected, (state, action) => {
+        state.error = action.payload
+      })
   },
 })
 
 export const { logout } = userSlice.actions
 export default userSlice.reducer
+
+
+
+
+

@@ -1,11 +1,24 @@
 import Account from '../components/Account'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchUserProfile } from '../redux/userSlice'
 
 function Profil() {
+
+  const dispatch = useDispatch()
+  const { token, user } = useSelector((state) => state.user)
+
+
+  useEffect(() => {
+    if (token) {
+      dispatch(fetchUserProfile())
+    }
+  }, [token, dispatch])
     return(
     <main className="main bg-dark">
       <div className="header">
-        <h1>Welcome back<br />Tony Jarvis!</h1>
-        <button class="edit-button">Edit Name</button>
+        <h1>Welcome back<br />{user ? `${user.firstName} ${user.lastName}!` : 'Loading...'}</h1>
+        <button className="edit-button">Edit Name</button>
       </div>
 
 
