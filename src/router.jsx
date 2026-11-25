@@ -4,6 +4,7 @@ import Login from './pages/Login'
 import Profil from './pages/Profil'
 import ErrorPage from './pages/ErrorPage'
 import Layout from './components/Layout'
+import ProtectedRoute from './components/ProtectedRoute';
 
 
 
@@ -19,7 +20,7 @@ const AppRouter = () => {
                 <Route path='/' element={<Layout />} >
                     <Route index element={<Home />} />
                     <Route path='/login' element={<Login />} />
-                    <Route path='/profile' element={<Profil />} />
+                    <Route path='/profile' element={ <ProtectedRoute><Profil /> </ProtectedRoute>} />
                     <Route path="*" element={<ErrorPage />} />
                 </Route>
 
